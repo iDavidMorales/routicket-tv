@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>Routicket TV · Screen Manager</title>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="./" aria-label="Routicket TV">
+        <span class="brand-mark"><i class="fa-solid fa-tv"></i></span>
+        <span><strong>Routicket</strong><small>TV</small></span>
+      </a>
+
+      <nav class="side-nav">
+        <button class="nav-item active" data-section="screens"><i class="fa-solid fa-display"></i><span>Pantallas</span></button>
+        <button class="nav-item" data-section="content"><i class="fa-solid fa-photo-film"></i><span>Contenido</span></button>
+        <button class="nav-item" data-section="playlists"><i class="fa-solid fa-list"></i><span>Playlists</span></button>
+        <button class="nav-item" data-section="schedule"><i class="fa-regular fa-calendar"></i><span>Programación</span></button>
+      </nav>
+
+      <div class="source-card">
+        <span class="source-icon"><i class="fa-solid fa-play"></i></span>
+        <div>
+          <strong>Routicket Play</strong>
+          <small>Gestor de contenido</small>
+        </div>
+        <a href="https://routicket-play-app.xupplier.workers.dev/" target="_blank" rel="noreferrer" title="Abrir Routicket Play"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="menuBtn" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <p class="eyebrow">CONTROL DE CONTENIDO</p>
+          <h1>Routicket TV</h1>
+        </div>
+        <div class="top-actions">
+          <span class="connection"><span></span> Demo local</span>
+          <button class="primary-btn" id="addScreenBtn"><i class="fa-solid fa-plus"></i> Añadir pantalla</button>
+        </div>
+      </header>
+
+      <section class="section active" id="section-screens">
+        <div class="summary-grid">
+          <article class="metric-card"><span class="metric-icon"><i class="fa-solid fa-display"></i></span><div><strong id="metricTotal">0</strong><small>Pantallas</small></div></article>
+          <article class="metric-card"><span class="metric-icon success"><i class="fa-solid fa-signal"></i></span><div><strong id="metricOnline">0</strong><small>En línea</small></div></article>
+          <article class="metric-card"><span class="metric-icon"><i class="fa-solid fa-circle-play"></i></span><div><strong id="metricPlaying">0</strong><small>Reproduciendo</small></div></article>
+        </div>
+
+        <div class="section-heading">
+          <div><p class="eyebrow">DISPOSITIVOS</p><h2>Mis pantallas</h2><p>Elige una pantalla para cambiar lo que está mostrando.</p></div>
+          <button class="secondary-btn" id="refreshBtn"><i class="fa-solid fa-rotate"></i> Actualizar</button>
+        </div>
+
+        <div class="screen-grid" id="screenGrid"></div>
+      </section>
+
+      <section class="section" id="section-content">
+        <div class="section-heading">
+          <div><p class="eyebrow">BIBLIOTECA</p><h2>Contenido</h2><p>Routicket Play permanece como fuente principal; aquí eliges qué enviar a la TV.</p></div>
+        </div>
+        <div class="library-grid" id="libraryGrid"></div>
+      </section>
+
+      <section class="section" id="section-playlists">
+        <div class="empty-state"><i class="fa-solid fa-list"></i><h2>Playlists</h2><p>La V2 permitirá combinar videos, imágenes, QR y páginas web con duración y orden.</p></div>
+      </section>
+
+      <section class="section" id="section-schedule">
+        <div class="empty-state"><i class="fa-regular fa-calendar"></i><h2>Programación</h2><p>La V2 permitirá cambiar el contenido automáticamente por día y horario.</p></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="modal" id="controlModal">
+    <form method="dialog" class="modal-card" id="controlForm">
+      <div class="modal-head">
+        <div><p class="eyebrow">CONTROL REMOTO</p><h2 id="modalScreenName">Pantalla</h2></div>
+        <button class="icon-btn close-btn" value="cancel" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="now-playing" id="nowPlaying"></div>
+
+      <div class="content-types" id="contentTypes">
+        <button type="button" class="type-btn active" data-type="routicket"><i class="fa-solid fa-play"></i><span>Routicket Play</span></button>
+        <button type="button" class="type-btn" data-type="url"><i class="fa-solid fa-globe"></i><span>URL</span></button>
+        <button type="button" class="type-btn" data-type="qr"><i class="fa-solid fa-qrcode"></i><span>QR</span></button>
+        <button type="button" class="type-btn" data-type="image"><i class="fa-regular fa-image"></i><span>Imagen</span></button>
+        <button type="button" class="type-btn" data-type="video"><i class="fa-solid fa-video"></i><span>Video</span></button>
+      </div>
+
+      <label class="field">
+        <span id="contentLabel">Contenido de Routicket Play</span>
+        <input id="contentValue" type="url" value="https://routicket-play-app.xupplier.workers.dev/" placeholder="https://...">
+      </label>
+
+      <label class="field" id="titleField">
+        <span>Título en el panel</span>
+        <input id="contentTitle" type="text" value="Routicket Play" placeholder="Nombre del contenido">
+      </label>
+
+      <div class="quick-library">
+        <p>Accesos rápidos</p>
+        <div class="quick-list" id="quickList"></div>
+      </div>
+
+      <div class="modal-actions">
+        <a class="secondary-btn" id="openScreenLink" href="#" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir pantalla</a>
+        <button type="button" class="primary-btn" id="sendBtn"><i class="fa-solid fa-paper-plane"></i> Enviar a pantalla</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="addModal">
+    <form method="dialog" class="modal-card compact" id="addForm">
+      <div class="modal-head">
+        <div><p class="eyebrow">NUEVO DISPOSITIVO</p><h2>Añadir pantalla</h2></div>
+        <button class="icon-btn close-btn" value="cancel"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <label class="field"><span>Nombre</span><input id="newScreenName" required placeholder="Ej. Recepción"></label>
+      <label class="field"><span>Ubicación</span><input id="newScreenLocation" placeholder="Ej. Lobby"></label>
+      <div class="pairing-preview"><i class="fa-solid fa-qrcode"></i><div><strong>Vinculación por QR</strong><p>En esta demo se crea un ID local. En la API real este paso generará un QR/código temporal.</p></div></div>
+      <div class="modal-actions"><button type="button" class="primary-btn" id="saveScreenBtn"><i class="fa-solid fa-plus"></i> Crear pantalla</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="./app.js"></script>
+</body>
+</html>
