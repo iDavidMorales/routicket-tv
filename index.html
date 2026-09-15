@@ -10,6 +10,16 @@
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+  <div class="auth-gate" id="authGate" hidden>
+    <div class="auth-gate-card">
+      <span class="brand-mark"><i class="fa-solid fa-tv"></i></span>
+      <p class="eyebrow">ROUTICKET TV</p>
+      <h2>Administra tus pantallas</h2>
+      <p id="authGateText">Inicia sesión con tu cuenta Routicket para continuar.</p>
+      <a class="primary-btn" id="authGateLogin" href="/oauth/login"><i class="fa-solid fa-user-shield"></i> Continuar con Routicket</a>
+    </div>
+  </div>
+
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
       <a class="brand" href="./" aria-label="Routicket TV">
@@ -30,7 +40,7 @@
           <strong>Routicket Play</strong>
           <small>Gestor de contenido</small>
         </div>
-        <a href="https://routicket-play-app.xupplier.workers.dev/" target="_blank" rel="noreferrer" title="Abrir Routicket Play"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a href="https://routicket-play-app.vercel.app/" target="_blank" rel="noreferrer" title="Abrir Routicket Play"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       </div>
     </aside>
 
@@ -42,7 +52,8 @@
           <h1>Routicket TV</h1>
         </div>
         <div class="top-actions">
-          <span class="connection"><span></span> Demo local</span>
+          <span class="connection"><span></span> Routicket Play conectado</span>
+          <div id="authArea"></div>
           <button class="primary-btn" id="addScreenBtn"><i class="fa-solid fa-plus"></i> Añadir pantalla</button>
         </div>
       </header>
@@ -63,9 +74,16 @@
       </section>
 
       <section class="section" id="section-content">
-        <div class="section-heading">
-          <div><p class="eyebrow">BIBLIOTECA</p><h2>Contenido</h2><p>Routicket Play permanece como fuente principal; aquí eliges qué enviar a la TV.</p></div>
+        <div class="section-heading content-heading">
+          <div><p class="eyebrow">BIBLIOTECA EN VIVO</p><h2>Contenido de Routicket Play</h2><p>Busca y envía a una TV contenido publicado en Routicket Play.</p></div>
+          <button class="secondary-btn" id="playReloadBtn"><i class="fa-solid fa-rotate"></i> Recargar</button>
         </div>
+        <div class="play-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="playSearchInput" type="search" placeholder="Buscar películas, videos o contenido Routicket…" autocomplete="off">
+          <button class="primary-btn" id="playSearchBtn"><i class="fa-solid fa-search"></i> Buscar</button>
+        </div>
+        <p class="api-status" id="playApiStatus">Abre esta sección para cargar el catálogo desde Routicket Play.</p>
         <div class="library-grid" id="libraryGrid"></div>
       </section>
 
@@ -98,7 +116,7 @@
 
       <label class="field">
         <span id="contentLabel">Contenido de Routicket Play</span>
-        <input id="contentValue" type="url" value="https://routicket-play-app.xupplier.workers.dev/" placeholder="https://...">
+        <input id="contentValue" type="url" value="https://routicket-play-app.vercel.app/" placeholder="https://...">
       </label>
 
       <label class="field" id="titleField">
@@ -126,7 +144,7 @@
       </div>
       <label class="field"><span>Nombre</span><input id="newScreenName" required placeholder="Ej. Recepción"></label>
       <label class="field"><span>Ubicación</span><input id="newScreenLocation" placeholder="Ej. Lobby"></label>
-      <div class="pairing-preview"><i class="fa-solid fa-qrcode"></i><div><strong>Vinculación por QR</strong><p>En esta demo se crea un ID local. En la API real este paso generará un QR/código temporal.</p></div></div>
+      <div class="pairing-preview"><i class="fa-solid fa-qrcode"></i><div><strong>Vinculación por QR</strong><p>Por ahora se crea un ID local. La siguiente etapa generará un código temporal para enlazar una TV física.</p></div></div>
       <div class="modal-actions"><button type="button" class="primary-btn" id="saveScreenBtn"><i class="fa-solid fa-plus"></i> Crear pantalla</button></div>
     </form>
   </dialog>
